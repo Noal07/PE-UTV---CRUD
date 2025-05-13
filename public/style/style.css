@@ -1,29 +1,130 @@
-/* CSS Reset */
+/* CSS Reset (behold denne) */
 html {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 *,
 *:before,
 *:after {
-    margin: 0;
-    padding: 0;
-    box-sizing: inherit;
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
 }
 
 body {
-    display: grid;
-    grid-template-rows: 120px auto 120px;
-    min-height: 100vh;
+  display: grid;
+  grid-template-rows: 120px auto 120px;
+  min-height: 100vh;
+  background-color: #1e1e1e; 
+  color: #f0f0f0;
 }
 
 header {
-    background-color: #eaeaea;
+  display: flex;
+  background-color: #333;
+  justify-content: center;
+  align-items: center;
+}
+
+header nav {
+  display: flex;
+  gap: 10px;
+}
+
+header nav a {
+  padding: 8px 12px;
+  text-decoration: none;
+  color: #f0f0f0;
+  background-color: #555;
+  border-radius: 5px;
 }
 
 main {
-    background-color: #fafafa;
+  background-color: #2c2c2c;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding-top: 60px;
+}
+
+#brukerTabell {
+  width: 80%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+#brukerTabell th,
+#brukerTabell td {
+  border: 1px solid #555;
+  padding: 8px;
+  text-align: center;
+}
+
+#brukerTabell th {
+  background-color: #444; 
+  color: #f0f0f0; 
 }
 
 footer {
-    background-color: #eaeaea;
+  display: flex;
+  background-color: #333;
+  justify-content: center;
+  align-items: center;
+  color: #f0f0f0;
+}
+
+button[data-bruker-id] {
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+  padding: 5px;
+  width: 80%;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.user-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  margin: auto;
+  background-color: #333;
+  padding: 20px;
+  border-radius: 10px;
+  color: #f0f0f0;
+  width: 300px;
+}
+
+.user-wrapper label {
+  margin-bottom: 5px;
+}
+
+.user-wrapper div {
+  margin-bottom: 15px;
+}
+
+.user-wrapper input,
+.user-wrapper select {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #555;
+  border-radius: 5px;
+  background-color: #444;
+  color: #f0f0f0;
+}
+
+.user-wrapper button {
+  width: 100%;
+  padding: 10px;
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.user-wrapper button:hover {
+  background-color: #e63939;
 }

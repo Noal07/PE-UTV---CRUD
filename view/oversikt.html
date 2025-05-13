@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="nb">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Oversikt</title>
+    <link rel="stylesheet" href="/style/style.css" />
+  </head>
+  <body>
+    <header>
+      <div class="logo"></div>
+      <nav>
+        <a href="/">Forside</a>
+        <a href="/login">Logge inn</a>
+        <a href="/ny-bruker">Ny bruker</a>
+      </nav>
+    </header>
+    <main>
+      <h1>Oversikt over Brukere</h1>
+      <table id="brukerTabell">
+        <thead>
+          <tr>
+            <th>Navn</th>
+            <th>E-post</th>
+            <th>Rolle</th>
+            <th>Handlinger</th>
+          </tr>
+        </thead>
+        <tbody id="brukerTabellBody"></tbody>
+      </table>
+    </main>
+    <footer>&copy; 2025 Freia Videregående skole</footer>
+    <tbody id="brukerTabellBody"></tbody>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const rolleMapping = {
+      1: "Lærer",
+      2: "Elev",
+    };
+
+    function hentRolleTekst(rolleId) {
+      return rolleMapping[rolleId] || "Ukjent";
+    }
+
+    fetch("/brukere")
+      .then((response) => response.json())
+      .then((brukere) => {
+        const brukerTabellBody = document.getElementById("brukerTabellBody");
+        brukere.forEach((bruker) => {
+          const row = brukerTabellBody.insertRow();
+          row.insertCell().textContent = bruker.Navn;
+          row.insertCell().textContent = bruker.Epost;
+          const rolleCelle = row.insertCell();
+          rolleCelle.textContent = hentRolleTekst(bruker.ID_Rolle);
+
+          const handlingerCelle = row.insertCell();
+
+          // Create "Edit" button
+          const redigerKnapp = document.createElement("button");
+          redigerKnapp.textContent = "Rediger";
+          redigerKnapp.dataset.brukerId = bruker.ID_bruker;
+          redigerKnapp.addEventListener("click", redigerBruker);
+          handlingerCelle.appendChild(redigerKnapp);
+
+          // Create "Delete" button
+          const slettKnapp = document.createElement("button");
+          slettKnapp.textContent = "Slett";
+          slettKnapp.dataset.brukerId = bruker.ID_bruker;
+          slettKnapp.addEventListener("click", slettBruker);
+          handlingerCelle.appendChild(slettKnapp);
+        });
+      })
+      .catch((error) => {
+        console.error("Feil ved henting av brukerdata:", error);
+        document.getElementById("brukerTabellBody").innerHTML =
+          '<tr><td colspan="4">Feil ved henting av brukerdata.</td></tr>';
+      });
+
+    function redigerBruker(event) {
+      const brukerId = event.target.dataset.brukerId;
+      window.location.href = `/rediger-bruker?id=${brukerId}`;
+    }
+
+    function slettBruker(event) {
+      const brukerId = event.target.dataset.brukerId;
+      if (
+        confirm(
+          `Er du sikker på at du vil slette bruker med ID ${brukerId}?`
+        )
+      ) {
+        fetch(`/brukere/${brukerId}`, {
+          method: "DELETE",
+        })
+          .then((response) => {
+            if (response.ok) {
+              event.target.closest("tr").remove();
+              console.log(`Bruker med ID ${brukerId} ble slettet.`);
+            } else {
+              console.error(
+                "Feil ved sletting av bruker:",
+                response.status
+              );
+              alert("Feil ved sletting av bruker.");
+            }
+          })
+          .catch((error) => {
+            console.error("Feil ved sletting av bruker:", error);
+            alert("Det oppsto en feil under sletting av brukeren.");
+          });
+      }
+    }
+  });
+</script>
+  </body>
+</html>

@@ -10,11 +10,12 @@
         <header>
             <div class="logo"></div>
             <nav>
+                <a href="/">Forside</a>
                 <a href="/login">Logge inn</a>
-                <a href="/ny-bruker">Ny bruker</a>
             </nav>
         </header>
         <main>
+            <div class="user-wrapper">
             <form action="/ny-bruker" method="post">
                 <div>
                     <label for="navn">Navn:</label>
@@ -29,10 +30,18 @@
                     <input type="password" id="passord" name="passord" required />
                 </div>
                 <div>
+                    <label for="rolle">Rolle:</label>
+                    <select name="rolle" id="rolle">
+                        <option value="1" >lærer</option>
+                        <option value="2" >elev</option>
+                    </select>
+                </div>
+                <div>
                     <button type="submit">Opprett</button>
+                </div>
                 </div>
             </form>
         </main>
-        <footer>&copy; 2025 Nexatech</footer>
+        <footer>&copy; 2025 Freia Videregående skole</footer>
     </body>
 </html>
